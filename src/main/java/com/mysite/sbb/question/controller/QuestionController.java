@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
+@RequestMapping("/question")
 @Controller
 @RequiredArgsConstructor
 public class QuestionController {
@@ -17,13 +18,8 @@ public class QuestionController {
 
     private final QuestionService questionService;
 
-    @RequestMapping("/")
-    public String index() {
-        return "redirect:/question/list";
-    }
 
-
-    @RequestMapping("/question/list")
+    @RequestMapping("/list")
     public String list(Model model) {
 
         List<Question> questionList = questionService.getList();
@@ -31,7 +27,7 @@ public class QuestionController {
         return "question_list";
     }
 
-    @RequestMapping("/question/detail/{id}")
+    @RequestMapping("/detail/{id}")
     public String detail(Model model, @PathVariable Integer id) {
         System.out.println("id : " + id);
         Question question = questionService.getQuestion(id);
