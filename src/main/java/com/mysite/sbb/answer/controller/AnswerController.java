@@ -25,10 +25,4 @@ public class AnswerController {
         return String.format("redirect:/question/detail/%s", id);
     }
 
-//    @PostMapping("/create/{id}")
-//    public String S(Model model, @PathVariable ("id") Integer id, @RequestParam String content) {
-//        Question question = questionService.getQuestion(id);
-//        answerService.create(question, content);
-//        return String.format("redirect:/question/detail/{id}");
-//    }
 }

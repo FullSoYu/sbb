@@ -141,7 +141,7 @@ class SbbApplicationTests {
     void getAnswerByQuestion() {
         Optional<Question> oq = questionRepository.findById(2);
 
-        if(oq.isPresent()) {
+        if (oq.isPresent()) {
             Question question = oq.get();
 
             List<Answer> answers = question.getAnswerList();
@@ -149,4 +149,18 @@ class SbbApplicationTests {
             assertEquals(4, answers.size());
         }
     }
+
+    @Test
+    @Transactional
+    //답변 삭제 메소드 에러는 없으나 삭제가 안됨
+    void deleteAnswerByquestion() {
+        Optional<Answer> oa = answerRepository.findById(9);
+
+        Answer answer = oa.get();
+
+        answerRepository.delete(answer);
+
+    }
 }
+
+
