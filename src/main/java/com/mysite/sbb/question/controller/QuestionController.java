@@ -1,12 +1,15 @@
 package com.mysite.sbb.question.controller;
 
+import com.mysite.sbb.question.QuestionForm;
 import com.mysite.sbb.question.domain.Question;
 import com.mysite.sbb.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/question")
@@ -34,16 +37,20 @@ public class QuestionController {
         return "question_detail";
 
     }
+
     @GetMapping("/create")
-    public String questionCreate() {
+    public String questionCreate(QuestionForm questionForm) {
         return "question_form";
     }
+
     @PostMapping("/create")
-    public String questionCreate(@RequestParam String subject, @RequestParam String content) {
+    public String questionSave(@Valid QuestionForm questionForm, BindingResult bindingResult) {
 
-        questionService.create(subject, content);
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
 
-        return "redirect:/question/list"; // 질문 저장후 질문목록으로 이동
+        questionService.create(questionForm.getSubject(), questionForm.getContent());
+        return "redirect:/question/list";
     }
-
 }
