@@ -32,6 +32,7 @@ public class QuestionService {
 
     }
 
+<<<<<<< HEAD
 
     public void create(String subject, String content) {
 
@@ -43,5 +44,13 @@ public class QuestionService {
 
         questionRepository.save(question);
 
+=======
+    public void create(String subject, String content) {
+        Question question = new Question();
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setCreateDate(LocalDateTime.now());
+        questionRepository.save(question);
+>>>>>>> 7804ab2f84287e79713fdd60e336a99d5fc3ddef
     }
 }

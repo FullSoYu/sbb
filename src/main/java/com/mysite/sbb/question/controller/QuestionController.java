@@ -1,5 +1,9 @@
 package com.mysite.sbb.question.controller;
 
+<<<<<<< HEAD
+=======
+import com.mysite.sbb.answer.AnswerForm;
+>>>>>>> 7804ab2f84287e79713fdd60e336a99d5fc3ddef
 import com.mysite.sbb.question.QuestionForm;
 import com.mysite.sbb.question.domain.Question;
 import com.mysite.sbb.question.service.QuestionService;
@@ -30,7 +34,7 @@ public class QuestionController {
     }
 
     @RequestMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable Integer id) {
+    public String detail(Model model, @PathVariable Integer id, AnswerForm answerForm) {
         System.out.println("id : " + id);
         Question question = questionService.getQuestion(id);
         model.addAttribute("question", question);
@@ -40,7 +44,23 @@ public class QuestionController {
 
     @GetMapping("/create")
     public String questionCreate(QuestionForm questionForm) {
+<<<<<<< HEAD
         return "question_form";
+=======
+        return "/question_form";
+    }
+
+    @PostMapping("/create")
+    public String questionSave(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "question_form";
+        }
+
+        questionService.create(questionForm.getSubject(), questionForm.getContent());
+
+        return "redirect:/question/list";
+>>>>>>> 7804ab2f84287e79713fdd60e336a99d5fc3ddef
     }
 
     @PostMapping("/create")
