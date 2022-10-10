@@ -4,6 +4,7 @@ import com.mysite.sbb.answer.dao.AnswerRepository;
 import com.mysite.sbb.answer.domain.Answer;
 import com.mysite.sbb.question.dao.QuestionRepository;
 import com.mysite.sbb.question.domain.Question;
+import com.mysite.sbb.question.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -152,7 +153,7 @@ class SbbApplicationTests {
 
     @Test
     @Transactional
-    //답변 삭제 메소드 에러는 없으나 삭제가 안됨
+        //답변 삭제 메소드 에러는 없으나 삭제가 안됨
     void deleteAnswerByquestion() {
         Optional<Answer> oa = answerRepository.findById(9);
 
@@ -161,6 +162,20 @@ class SbbApplicationTests {
         answerRepository.delete(answer);
 
     }
+
+    @Autowired
+    private QuestionService questionService;
+
+    @Test
+    void testJpa() {
+        for (int i = 0; i <= 300; i++) {
+            String subject = String.format("테스트 데이터 입니다.:[%03d]", i);
+
+            String content = "내용무";
+            questionService.create(subject, content);
+        }
+    }
+
 }
 
 
