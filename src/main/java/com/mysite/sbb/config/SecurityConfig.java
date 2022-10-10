@@ -24,7 +24,12 @@ public class SecurityConfig {
                 .permitAll()
                 .and()
                 .csrf()
-                .ignoringAntMatchers("/**");
+                .ignoringAntMatchers("/**")
+                .and()
+                .formLogin()
+                .loginPage("/user/login")
+                .defaultSuccessUrl("/")
+                ;
         return http.build();
     }
 }
