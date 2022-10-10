@@ -3,6 +3,8 @@ package com.mysite.sbb.siteuser.controller;
 import com.mysite.sbb.siteuser.UserCreateForm;
 import com.mysite.sbb.siteuser.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +44,15 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login()
+    {
         return "login_form";
+    }
+
+    @GetMapping("/info")
+    public void getUserInfor() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println("PW : " + userDetails.getUsername());
     }
 
 }
