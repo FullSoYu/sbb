@@ -1,6 +1,7 @@
 package com.mysite.sbb.answer.domain;
 
 import com.mysite.sbb.question.domain.Question;
+import com.mysite.sbb.siteuser.domain.SiteUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,4 +27,7 @@ public class Answer {
 
     @ManyToOne
     private Question question;
+
+    @ManyToOne
+    private SiteUser author;
 }

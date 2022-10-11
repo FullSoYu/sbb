@@ -49,6 +49,7 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
+
     public Page<Question> getList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createDate"));

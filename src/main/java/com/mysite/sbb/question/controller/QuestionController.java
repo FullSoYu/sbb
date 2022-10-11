@@ -30,6 +30,7 @@ public class QuestionController {
         Page<Question> paging = questionService.getList(page);
         model.addAttribute("paging",paging);
 
+
 //        List<Question> questionList = questionService.getList();
 //        model.addAttribute("questionList", questionList);
         return "question_list";
