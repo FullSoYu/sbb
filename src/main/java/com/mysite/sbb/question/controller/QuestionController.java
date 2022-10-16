@@ -4,8 +4,12 @@ import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.question.QuestionForm;
 import com.mysite.sbb.question.domain.Question;
 import com.mysite.sbb.question.service.QuestionService;
+import com.mysite.sbb.siteuser.domain.SiteUser;
+import com.mysite.sbb.siteuser.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,10 +24,11 @@ public class QuestionController {
 
 
     private final QuestionService questionService;
+    private final UserService userService;
 
 
     @RequestMapping("/list")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
         Page<Question> paging = this.questionService.getList(page);
         model.addAttribute("paging", paging);
 
@@ -41,19 +46,22 @@ public class QuestionController {
 
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String questionCreate(QuestionForm questionForm) {
         return "/question_form";
     }
 
-    @PostMapping("/create")
-    public String questionSave(@Valid QuestionForm questionForm, BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()) {
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create")
+    public String questionSave(@Valid QuestionForm questionForm, BindingResult bindingResult, @AuthenticationPrincipal SiteUser siteUser) {
+
+        if (bindingResult.hasErrors()) {
             return "question_form";
         }
-
-        questionService.create(questionForm.getSubject(), questionForm.getContent());
+//        SiteUser siteUser = this.userService.getUser(principal.getName());
+        questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 
         return "redirect:/question/list";
     }

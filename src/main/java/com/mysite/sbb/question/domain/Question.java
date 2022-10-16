@@ -1,7 +1,9 @@
 package com.mysite.sbb.question.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mysite.sbb.answer.domain.Answer;
+import com.mysite.sbb.siteuser.domain.SiteUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +28,9 @@ public class Question {
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Answer> answerList;
 
+    @ManyToOne
+    private SiteUser author;
 }

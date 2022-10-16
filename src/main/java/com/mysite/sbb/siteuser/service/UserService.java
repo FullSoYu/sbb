@@ -2,9 +2,12 @@ package com.mysite.sbb.siteuser.service;
 
 import com.mysite.sbb.siteuser.dao.UserReository;
 import com.mysite.sbb.siteuser.domain.SiteUser;
+import com.mysite.sbb.util.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,9 +23,17 @@ public class UserService {
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .build();
-
-
         userReository.save(user);
         return user;
+    }
+
+    public SiteUser getUser(String username) {
+        Optional<SiteUser> siteUser = this.userReository.findByUsername(username);
+        if(siteUser.isPresent()) {
+            return siteUser.get();
+        } else {
+            throw  new DataNotFoundException("siteuser not found");
+        }
+
     }
 }
