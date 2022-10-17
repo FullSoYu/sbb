@@ -23,16 +23,17 @@ public class UserService {
                 .email(email)
                 .password(passwordEncoder.encode(password))
                 .build();
-
-
         userReository.save(user);
         return user;
     }
 
     public SiteUser getUser(String username) {
-        Optional<SiteUser> siteUser = userReository.findByUsername(username);
-
-        return siteUser.orElseThrow(()->new DataNotFoundException("siteuser not found"));
+        Optional<SiteUser> siteUser = this.userReository.findByUsername(username);
+        if(siteUser.isPresent()) {
+            return siteUser.get();
+        } else {
+            throw  new DataNotFoundException("siteuser not found");
+        }
 
     }
 }
