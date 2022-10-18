@@ -17,7 +17,7 @@ public class AnswerService {
 
     private final AnswerRepository answerRepository;
 
-    public void create(Question question, String content, SiteUser author) {
+    public Answer create(Question question, String content, SiteUser author) {
 
         Answer answer = new Answer();
 
@@ -26,6 +26,8 @@ public class AnswerService {
         answer.setCreateDate(LocalDateTime.now());
         answer.setAuthor(author);
         answerRepository.save(answer);
+
+        return answer;
 
     }
 

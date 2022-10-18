@@ -26,6 +26,7 @@ import java.security.Principal;
 public class QuestionController {
 
     private final QuestionService questionService;
+
     private final UserService userService;
 
     @RequestMapping("/list")
@@ -41,7 +42,6 @@ public class QuestionController {
 
     @RequestMapping("/detail/{id}")
     public String detail(Model model, @PathVariable Integer id, AnswerForm answerForm, @AuthenticationPrincipal SiteUser siteUser, Principal principal) {
-        System.out.println("id: " + id);
         Question question = questionService.getQuestion(id);
         model.addAttribute("question", question);
         return "question_detail";
@@ -95,7 +95,7 @@ public class QuestionController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/delete/{id}")
-    public String questionDelte(@AuthenticationPrincipal SiteUser siteUser, @PathVariable("id") Integer id) {
+    public String questionDelet(@AuthenticationPrincipal SiteUser siteUser, @PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
         if(!question.getAuthor().getUsername().equals(siteUser.getUsername()) && !(siteUser.getRole().equals("ROLE_ADMIN"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
@@ -108,8 +108,8 @@ public class QuestionController {
     @GetMapping("/vote/{id}")
     public String questionVote(@AuthenticationPrincipal SiteUser siteUser, @PathVariable("id") Integer id) {
         Question question = this.questionService.getQuestion(id);
-//        SiteUser siteUser = this.userService.getUser(principal.getName());
         this.questionService.vote(question, siteUser);
         return String.format("redirect:/question/detail/%s", id);
     }
+
 }

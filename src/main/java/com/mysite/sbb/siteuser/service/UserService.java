@@ -18,10 +18,11 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public SiteUser create(String username, String email, String password) {
-                SiteUser user = SiteUser.builder()
+        SiteUser user = SiteUser.builder()
                 .username(username)
                 .email(email)
                 .password(passwordEncoder.encode(password))
+                .role("ROLE_USER")
                 .build();
         userReository.save(user);
         return user;
@@ -29,10 +30,10 @@ public class UserService {
 
     public SiteUser getUser(String username) {
         Optional<SiteUser> siteUser = this.userReository.findByUsername(username);
-        if(siteUser.isPresent()) {
+        if (siteUser.isPresent()) {
             return siteUser.get();
         } else {
-            throw  new DataNotFoundException("siteuser not found");
+            throw new DataNotFoundException("siteuser not found");
         }
 
     }

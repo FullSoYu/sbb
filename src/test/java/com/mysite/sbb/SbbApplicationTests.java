@@ -73,12 +73,12 @@ class SbbApplicationTests {
 
     }
 
-    @Test
-    void getByOrSubject() {
-        List<Question> questions = questionRepository.findBySubjectOrSubject("sbb가 무엇인가요?", "스프링부트 모델 질문입니다.");
-
-        System.out.println("실행 합니까? : " + questions.size());
-    }
+//    @Test
+//    void getByOrSubject() {
+//        List<Question> questions = questionRepository.findBySubjectOrSubject("sbb가 무엇인가요?", "스프링부트 모델 질문입니다.");
+//
+//        System.out.println("실행 합니까? : " + questions.size());
+//    }
 
     @Test
     void getBySubjectAndContent() {
