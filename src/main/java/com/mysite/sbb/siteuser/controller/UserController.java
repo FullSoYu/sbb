@@ -55,4 +55,9 @@ public class UserController {
         System.out.println("PW : " + userDetails.getUsername());
     }
 
+    @GetMapping("/editprofile")
+    public String editprofice () {
+        return "editprofile_form";
+    }
+
 }
